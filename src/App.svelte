@@ -1,9 +1,10 @@
 <script>
 	import throttle from 'just-throttle';
-	import {fade} from 'svelte/animate';
+	import {fade} from 'svelte/transition';
 	export let tag;
 
 function getUrl () {
+	// api credit (including key) => https://codepen.io/ChynoDeluxe/pen/WGQzWW
 	const giphy = {
 		baseURL: "https://api.giphy.com/v1/gifs/",
 		apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
@@ -60,7 +61,7 @@ function getUrl () {
 
 <svelte:options tag="arc-gif" />
 
-<div class="container" >
+<div class="container" in:fade="{{duration: 3000}}" >
 	<input type="text" bind:value={tag} on:keypress={keypress}/>
 	{#if gifPromise }
 		{#await gifPromise}
