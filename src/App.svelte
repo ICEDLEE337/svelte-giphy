@@ -1,6 +1,7 @@
 <script>
 	export let tag;
 
+function getUrl () {
 	const giphy = {
 		baseURL: "https://api.giphy.com/v1/gifs/",
 		apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
@@ -19,10 +20,12 @@
 			"&rating=" +
 			giphy.rating
 	);
+	return giphyURL;
+}
 
-	let gifPromise = fetch(giphyURL)
+	$: gifPromise = tag && fetch(getUrl())
 		.then(res => res.json())
-		.then(json => json.data.image_mp4_url || 'https://media3.giphy.com/media/TcKmUDTdICRwY/giphy.mp4');
+		.then(json => json.data.image_mp4_url);
 
 </script>
 
@@ -39,6 +42,7 @@
 		display: flex;
 		align-content: center;
 		justify-content: center;
+		flex-direction: column;
 	}
 </style>
 
@@ -47,7 +51,8 @@
 	{#await gifPromise}
 		<h1>Loading excellent content related to {tag}</h1>
 	{:then url}
-		<video class="gif" width="320" height="240" controls alt={tag}>
+		<h1>{tag}</h1>
+		<video class="gif" width="320" height="240" controls autoplay alt={tag}>
 	  		<source src={url} type="video/mp4">
 	  	</video>
 	{:catch err}
