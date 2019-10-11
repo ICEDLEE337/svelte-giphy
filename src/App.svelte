@@ -1,4 +1,6 @@
 <script>
+	import throttle from 'just-throttle';
+	import {fade} from 'svelte/animate';
 	export let tag;
 
 function getUrl () {
@@ -23,9 +25,19 @@ function getUrl () {
 	return giphyURL;
 }
 
-	$: gifPromise = tag && fetch(getUrl())
-		.then(res => res.json())
-		.then(json => json.data.image_mp4_url);
+	let gifPromise;
+
+	let api = () => {
+		return fetch(getUrl())
+			.then(res => res.json())
+			.then(json => json.data.image_mp4_url);
+	}
+
+	let loadData = () => {gifPromise = api();};
+
+	loadData();
+
+	let keypress = throttle(loadData, 500);
 
 </script>
 
@@ -47,15 +59,18 @@ function getUrl () {
 </style>
 
 <svelte:options tag="arc-gif" />
+
 <div class="container" >
-	{#await gifPromise}
-		<h1>Loading excellent content related to {tag}</h1>
-	{:then url}
-		<h1>{tag}</h1>
-		<video class="gif" width="320" height="240" controls autoplay alt={tag}>
-	  		<source src={url} type="video/mp4">
-	  	</video>
-	{:catch err}
-		<small>oops... failed to load that excellent {tag} content</small>
-	{/await}
+	<input type="text" bind:value={tag} on:keypress={keypress}/>
+	{#if gifPromise }
+		{#await gifPromise}
+			<h1>Loading excellent content related to {tag}</h1>
+		{:then url}
+			<video class="gif" width="320" height="240" controls autoplay alt={tag}>
+		  		<source src={url} type="video/mp4">
+		  	</video>
+		{:catch err}
+			<small>oops... failed to load that excellent {tag} content</small>
+		{/await}
+	{/if}
 </div>
