@@ -17,6 +17,7 @@
     "sirv-cli": "^0.4.4"
   },
   "scripts": {
+    "lee": "cat public/bundle.js | pbcopy",
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
     "dev": "run-p start:dev autobuild",
