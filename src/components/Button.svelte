@@ -7,6 +7,6 @@ export let label;
 button {
     padding: 16px;
     box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
-    background-color: lightgray;
+    background-color: whitesmoke;
 }
 </style>

@@ -14,7 +14,8 @@
 
 <script>
     import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher();
+    export let handler;
     export let results;
     export let event;
     let query;
@@ -24,8 +25,11 @@
             timeoutId && window.clearTimeout(timeoutId);
             timeoutId = window.setTimeout(() => {
                 results = null;
-                event && window.dispatchEvent(new CustomEvent(event, {detail: query}));
+                window.dispatchEvent(new CustomEvent(event, {detail: query}));
                 dispatch('change', query);
+                if (this.handler) {
+                    this.handler(query);
+                }
             }, 300);
         }
     }

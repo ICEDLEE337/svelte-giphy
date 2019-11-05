@@ -1,5 +1,3 @@
-import Button from './components/Button.svelte';
-import Gif from './components/Gif.svelte';
-import Typeahead from './components/Typeahead.svelte';
-
-export default {Button, Gif, Typeahead};
+export { default as Button} from './components/Button.svelte';
+export { default as Gif} from './components/Gif.svelte';
+export { default as Typeahead} from './components/Typeahead.svelte';
