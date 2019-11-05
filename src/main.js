@@ -1,10 +1,5 @@
-import App from './App.svelte';
+import Button from './components/Button.svelte';
+import Gif from './components/Gif.svelte';
+import Typeahead from './components/Typeahead.svelte';
 
-// const app = new App({
-// 	target: document.body,
-// 	props: {
-// 		name: 'world'
-// 	}
-// });
-
-export default app;
+export default {Button, Gif, Typeahead};

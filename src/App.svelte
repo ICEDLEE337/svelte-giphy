@@ -1,30 +1,23 @@
-<svelte:options tag="arc-typeahead" />
-<input placeholder="Search by Name" bind:value={query} type="text" on:keyup={change} />
+<svelte:options tag='arc-app'/>
+<h1>Components</h1>
 
-{#if results}
-<small>{count}</small>
-    {#if results.length}
-        {#each results as result}
-            <h3>{result}</h3>
-        {/each}
-    {:else}
-        No results for search term {query}
-    {/if}
-{/if}
+<!-- <arc-gif tag="dancing" /> -->
+<Typeahead results={results} on:change={update} />
 
 <script>
-    export let results;
-    export let event;
-    let query;
-    let timeoutId;
-    function change () {
-        if (query.length >= 3) {
-            timeoutId && window.clearTimeout(timeoutId);
-            timeoutId = window.setTimeout(() => {
-                results = null;
-                window.dispatchEvent(new CustomEvent(event, {detail: query}));
-            }, 300);
-        }
-    }
-    $: count = results ? results.length : 0;
+import {onMount} from 'svelte';
+import Button from './components/Button.svelte'
+import Gif from './components/Gif.svelte'
+import Typeahead from './components/Typeahead.svelte'
+let results;
+function click () {
+    alert('clicked');
+}
+function update (query) {
+    results = ['one', 'two', 'three', query.detail];
+}
+
+onMount(() => {
+    results = [];
+});
 </script>
