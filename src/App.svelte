@@ -1,7 +1,7 @@
 <svelte:options tag='arc-app'/>
 <h1>Components</h1>
 
-<Typeahead results={results} event={event} />
+<arc-typeahead results={results} event={event}></arc-typeahead>
 
 <script>
 import {onMount} from 'svelte';
